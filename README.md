@@ -10,7 +10,7 @@ The bug seems to be caused by overwriting the existing information being stored 
 
 ## Propsed Solutions (In order of recommendation)
 
-### Solution One
+### [Solution One](https://github.com/MaxiCB/Happy-Birthday/blob/master/client/src/App.tsx#L58)
 
 The user will be taken through the wizard as currently implemented, and when the user reaches the prompt to enter another user's information all existing data will be sent regardless of their chose.
 
@@ -26,7 +26,7 @@ CONS -
 
 - This solution would make a seperate call for each entry
 
-## Solution Two
+## [Solution Two](https://github.com/MaxiCB/Happy-Birthday/blob/master/client/src/App.tsx#L72)
 
 The user will be taken through the wizard as currently implemented, and when the user reaches the prompt to enter another user's information all existing data will be added to an array storing user entered information.
 
@@ -41,7 +41,7 @@ CONS -
 - Multiple changes to existing front end code
 - Multiple calls to service quickly
 
-## Solution Three
+## Solution Three [FE Code](https://github.com/MaxiCB/Happy-Birthday/blob/master/client/src/App.tsx#L99) - [BE Code](https://github.com/MaxiCB/Happy-Birthday/blob/master/backend/index.js#L21)
 
 The user will be taken through the wizard as currently implemented, and when the user reaches the prompt to enter another user's information all existing data will be added to an array storing user entered information similar to solution two, the main difference being moving the logic of iterative over the array to the service.
 
