@@ -1,5 +1,13 @@
 # Happy Birthday Service Bug Fix Proposal
 
+This is a very crude POC created to show different proposed solutions
+
+To being download the repo, **cd client**, **npm install**, **npm run start**, **cd ..**, **cd backend**, **npm install**, **npm run dev** and begin using the application.
+
+The frontend is a React app using typescript, using axios for network calls, and ANTD for components.
+
+The backend is a express application, using cors and body-parser, storing recieved information in memory.
+
 ### Bug Description
 
 Throughout the user information collection wizard, if the client chooses to add another person's information to the service the existing information os overwritten and not sent to the service. Once the user reaches the submit prompt only the last's entered information is sent.
