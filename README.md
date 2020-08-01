@@ -22,9 +22,9 @@ The bug seems to be caused by overwriting the existing information being stored 
 
 ### [Solution One](https://github.com/MaxiCB/Happy-Birthday/blob/master/client/src/App.tsx#L58)
 
-The user will be taken through the wizard as currently implemented, and when the user reaches the prompt to enter another user's information all existing data will be sent regardless of their chose.
+The user will be taken through the wizard as currently implemented, and when the user reaches the prompt to enter another user's information all existing data will be sent regardless of their choice.
 
-This solution has the benefit of ensuring all of the entered information is sent to the serve, while also requiring minimal changes to the application. There will be no need to change any existing logic for submission as it is already in place, it will just be a matter of calling the logic when the prompt is activated.
+This solution has the benefit of ensuring all of the entered information is sent to the service, while also requiring minimal changes to the application. There will be no need to change any existing logic for submission as it is already in place, it will just be a matter of calling the logic when the prompt is activated.
 
 PROS -
 
