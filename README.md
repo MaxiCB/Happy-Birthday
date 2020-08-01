@@ -1,6 +1,6 @@
 # Happy Birthday Service Bug Fix Proposal
 
-### [POC Appliation Source(https://github.com/MaxiCB/Happy-Birthday)
+### [POC Appliation Source](https://github.com/MaxiCB/Happy-Birthday)
 
 This is a very crude POC created to show different proposed solutions
 
