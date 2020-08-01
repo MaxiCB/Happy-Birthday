@@ -20,7 +20,7 @@ The bug seems to be caused by overwriting the existing information being stored 
 
 ## Propsed Solutions (In order of recommendation)
 
-### [Solution One](https://github.com/MaxiCB/Happy-Birthday/blob/master/client/src/App.tsx#L58)
+## [Solution One](https://github.com/MaxiCB/Happy-Birthday/blob/master/client/src/App.tsx#L58)
 
 The user will be taken through the wizard as currently implemented, and when the user reaches the prompt to enter another user's information all existing data will be sent regardless of their choice.
 
