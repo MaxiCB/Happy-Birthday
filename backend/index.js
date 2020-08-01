@@ -17,6 +17,12 @@ app.post("/person", (req, res) => {
   people.push(person);
   res.json({ people: people });
 });
+//Solution Three changes
+app.post("/multPeople", (req, res) => {
+  const { multiplePerson } = req.body;
+  people = [...people, ...multiplePerson];
+  res.json({ people: people });
+});
 
 app.listen(5000, () => {
   console.log("API Running at http://localhost:5000");

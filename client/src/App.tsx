@@ -3,6 +3,7 @@ import "./App.css";
 import axios from "axios";
 
 import { Steps, Layout, Form, Input, Button, Col, Row, Modal } from "antd";
+import { previewImage } from "antd/lib/upload/utils";
 
 // Interface for all information a user will contain
 interface Person {
@@ -20,6 +21,7 @@ const App: React.FC = () => {
   const [person, setPerson] = React.useState<Person>();
   // Boolean for showing the modal at the end
   const [modal, setModal] = React.useState<boolean>(false);
+  const [infoArray, setInfoArray] = React.useState<Person[]>([]);
 
   // Destructuring out components from ANTD
   const { Step } = Steps;
@@ -33,6 +35,77 @@ const App: React.FC = () => {
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
+
+  // Logic to create the referenced bug
+  // User choses yes
+  // Set step counter to 0
+  // Stop displaying modal
+  // This is the bug as it allows the user
+  // to over write the currently stored user information
+  const bugAddAnother = () => {
+    setStep(0);
+    setModal(false);
+  };
+  // User choses yes
+  // Submit the existing information
+  // Set step to 0
+  // Stop displaying modal
+  // User can input next persons information
+  // This also provides the benefit of using the same logic for
+  // Handling a single entry and multiple entries
+  // Any time the user is prompted with adding another user
+  // The current information will always be sent
+  const solutionOne = () => {
+    submitPerson();
+    setStep(0);
+    setModal(false);
+  };
+  // User choses yes
+  // Append information to infoArray;
+  // Set step to 0
+  // Stop displaying modal
+  // User can input next persons information
+  // When user finally selects no in last prompt
+  // We can iterate over the array and sumbit information
+  // This requires changing the submit logic
+  // Also requires adding another variable
+  const solutionTwo = () => {
+    person && setInfoArray([...infoArray, person]);
+    console.log(infoArray);
+    setStep(0);
+    setModal(false);
+  };
+  const solutionTwoSubmit = () => {
+    infoArray &&
+      infoArray.forEach((info) => {
+        axios
+          .post("http://localhost:5000/person", { person: info })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err));
+      });
+    setStep(0);
+    setModal(false);
+  };
+  // This logic can be combined with solutionTwo appending logic
+  // User can input next persons information
+  // When user finally selects no in last prompt
+  // We can send the whole array to the API
+  // This requires changing FE logic, adding another variable
+  // While also requiring a change to the API
+  // This is the least ideal solution
+  // As it requires the most amount of work
+  const solutionThreeSubmit = () => {
+    axios
+      .post("http://localhost:5000/multPeople", { multiplePerson: infoArray })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+    setStep(0);
+    setModal(false);
+  };
   // API Call to send user information
   const submitPerson = () => {
     axios
@@ -41,6 +114,8 @@ const App: React.FC = () => {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
+    setStep(0);
+    setModal(false);
   };
 
   // Populating the fields of the person
@@ -69,9 +144,7 @@ const App: React.FC = () => {
               // Stop displaying the modal
               // Submit the user's information
               // Set the step counter back to 0
-              setModal(false);
-              submitPerson();
-              setStep(0);
+              solutionOne();
             }}
           >
             No
@@ -84,8 +157,7 @@ const App: React.FC = () => {
               // Set step counter to 0
               // Stop displaying modal
               // This is the bug
-              setStep(0);
-              setModal(false);
+              solutionOne();
             }}
           >
             Yes
@@ -120,7 +192,7 @@ const App: React.FC = () => {
               />
             </Steps>
           </Col>
-          <Col span={8}>
+          <Col span={16}>
             <Form
               {...layout}
               name="basic"
@@ -129,7 +201,7 @@ const App: React.FC = () => {
             >
               {step === 0 && (
                 <Form.Item
-                  label="Name"
+                  label="What is your name?"
                   name="name"
                   rules={[
                     { required: true, message: "Please input your name!" },
@@ -140,7 +212,7 @@ const App: React.FC = () => {
               )}
               {step === 1 && (
                 <Form.Item
-                  label="Email"
+                  label="What is your email?"
                   name="email"
                   rules={[
                     { required: true, message: "Please input your email!" },
@@ -151,7 +223,7 @@ const App: React.FC = () => {
               )}
               {step === 2 && (
                 <Form.Item
-                  label="Month"
+                  label="In what month were you born?"
                   name="month"
                   rules={[
                     {
@@ -165,10 +237,10 @@ const App: React.FC = () => {
               )}
               {step === 3 && (
                 <Form.Item
-                  label="Day"
+                  label={`What day in ${person ? person.month : "the month"}?`}
                   name="day"
                   rules={[
-                    { required: true, message: "Please input your birth day!" },
+                    { required: true, message: `Please input your birth day!` },
                   ]}
                 >
                   <Input />
@@ -176,7 +248,7 @@ const App: React.FC = () => {
               )}
               {step === 4 && (
                 <Form.Item
-                  label="Year"
+                  label="In what year were you born"
                   name="year"
                   rules={[
                     {
